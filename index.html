@@ -152,7 +152,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPI</h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 02/10/2026 23:36</small>
+<div><h1>Dashboard KPI</h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 02/10/2026 23:52</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>02/10/2026 07:36</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -288,7 +288,7 @@ function med(a){const x=a.filter(v=>v!==null&&!isNaN(v));return x.length?x.reduc
 function mkChart(id,type,labels,ds,opts={}){
   const el=document.getElementById(id);if(!el)return;
   if(typeof Chart==='undefined'){var pai=el.parentElement;
-    if(pai&&!pai.dataset.semg){pai.dataset.semg='1';pai.innerHTML=`<div class='semgraf'>&#128246; Não foi possível carregar os gráficos (sem acesso à internet no momento).<br>Os cards e o ranking acima continuam valendo.</div>`;}
+    if(pai&&!pai.dataset.semg){pai.dataset.semg='1';pai.innerHTML=`<div class='semgraf'>&#128246; N&atilde;o foi poss&iacute;vel carregar os gr&aacute;ficos (sem acesso &agrave; internet no momento).<br>Os cards e o ranking acima continuam valendo.</div>`;}
     return;}
   if(CH[id])CH[id].destroy();
   Chart.defaults.color=TH.tx;Chart.defaults.borderColor=TH.grid;
@@ -330,9 +330,9 @@ function desenhaG(i){
   const asc=(kObj.s==='menor')===(ord==='melhor');
   const sorted=[...pares].sort((a,b)=>{if(a.v===null&&b.v===null)return 0;if(a.v===null)return 1;if(b.v===null)return -1;return asc?a.v-b.v:b.v-a.v;});
   const val=sorted.filter(x=>x.v!==null);const best=[...val].sort((a,b)=>kObj.s==='menor'?a.v-b.v:b.v-a.v);
-  const rot=sorted.map(x=>x.v===null?x.l:(best.indexOf(x)+1)+'º '+x.l);
-  const gs=document.getElementById('gs'+i);if(gs)gs.innerHTML=best.length>1?`&#9650; Melhor: <b>${best[0].l}</b> (${fmtV(best[0].v,kObj.f)}) &nbsp;&middot;&nbsp; &#9660; Atenção: <b>${best[best.length-1].l}</b> (${fmtV(best[best.length-1].v,kObj.f)})${multiMes?' &nbsp;&middot;&nbsp; '+perT:''}`:'';
-  const tLine=tends[kObj.k]?[{type:'line',label:'Tendência'+(multiMes?' ('+perT+')':''),data:sorted.map(x=>x.v),borderColor:TH.tend,backgroundColor:TH.tend,borderWidth:2.5,tension:0.4,cubicInterpolationMode:'monotone',pointRadius:3,pointHoverRadius:5,spanGaps:true,fill:false,order:0}]:[];
+  const rot=sorted.map(x=>x.v===null?x.l:(best.indexOf(x)+1)+'\u00ba '+x.l);
+  const gs=document.getElementById('gs'+i);if(gs)gs.innerHTML=best.length>1?`&#9650; Melhor: <b>${best[0].l}</b> (${fmtV(best[0].v,kObj.f)}) &nbsp;&middot;&nbsp; &#9660; Aten&ccedil;&atilde;o: <b>${best[best.length-1].l}</b> (${fmtV(best[best.length-1].v,kObj.f)})${multiMes?' &nbsp;&middot;&nbsp; '+perT:''}`:'';
+  const tLine=tends[kObj.k]?[{type:'line',label:'Tend\u00eancia'+(multiMes?' ('+perT+')':''),data:sorted.map(x=>x.v),borderColor:TH.tend,backgroundColor:TH.tend,borderWidth:2.5,tension:0.4,cubicInterpolationMode:'monotone',pointRadius:3,pointHoverRadius:5,spanGaps:true,fill:false,order:0}]:[];
   const mLine=kObj.b===1?[{type:'line',label:'Meta 100%',data:sorted.map(()=>1),borderColor:'#94a3b8',backgroundColor:'#94a3b8',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false,order:0}]:[];
   const extra=tLine.concat(mLine);const pal=kObj.g===BQ?CORES_CAFE:CORES_MES;
   const lblT=ctx=>ctx.dataset.type==='line'?ctx.dataset.label+': '+fmtV(ctx.raw,kObj.f):null;
@@ -375,7 +375,7 @@ function render(){
   const multiMes=mesesIdx.length>1;
   const perT=MC[f.mi]+(f.mi!==f.mf?' a '+MC[f.mf]:'')+' '+f.ano;
   const lojT=f.ls.length?f.ls.join(', '):'Todas as lojas';
-  const txt=lojT+' •'+perT+(f.grp?' •'+f.grp:'')+(segAt?' •'+segAt:'');
+  const txt=lojT+' \u2022'+perT+(f.grp?' \u2022'+f.grp:'')+(segAt?' \u2022'+segAt:'');
   document.getElementById('pbar').textContent=txt;
   document.getElementById('pSel').textContent=txt;
   let tags='';if(segAt)tags+=`<span class='stag'>&#128205; ${segAt}</span>`;if(f.grp)tags+=`<span class='gtag ${f.grp===BQ?'cf':''}'>${f.grp===BQ?'&#9749; ':''}${f.grp}</span>`;
@@ -385,7 +385,7 @@ function render(){
   document.getElementById('kgrid').innerHTML=kCards.map(kpi=>{
     const vals=dFilt.filter(x=>x.k===kpi.k).map(x=>vPer(x,f)).filter(v=>v!==null);
     const tot=CARD_TOT.has(kpi.o)||kpi.tt===1;const v=vals.length?(tot?vals.reduce((a,b)=>a+b,0):med(vals)):null;const at=ating(v,kpi.m,kpi.s);const hm=kpi.m!==null;const cl=cor3(at,hm,v,kpi);
-    const tag=lojas.length>1?`<div class='kag'>${tot?'Total das lojas':'Média por loja'}</div>`:'';
+    const tag=lojas.length>1?`<div class='kag'>${tot?'Total das lojas':'M&eacute;dia por loja'}</div>`:'';
     const ico=kpi.g===BQ?'&#9749; ':'';
     return`<div class='kc ${cl}'><div class='kt'>${ico}${kpi.k}</div>${tag}<div class='kv'>${fmtV(v,kpi.f)}</div>${kpi.b===1?barra(at):''}<div class='km'>Meta: ${hm?fmtV(kpi.m,kpi.f):'-'}</div></div>`;
   }).join('')||`<div style='padding:8px;color:#888'>Nenhum KPI no grupo.</div>`;
@@ -400,7 +400,7 @@ function render(){
   const sig=gKpis.map(k=>k.k).join('#')+'|'+multiMes;
   if(cont.dataset.sig!==sig){
     Object.keys(CH).filter(id=>id.indexOf('cG')===0).forEach(id=>{CH[id].destroy();delete CH[id];});
-    cont.innerHTML=gKpis.map((k,i)=>{const o=ords[k.k]||'melhor',md=modos[k.k]||'mes';const bModo=multiMes?`<span class='grp'><button class='ord-btn ${md==='mes'?'on':''}' onclick='setModo(${i},"mes",this)'>Mês a mês</button><button class='ord-btn ${md==='per'?'on':''}' onclick='setModo(${i},"per",this)'>Período</button></span>`:'';return`<div class='card ${k.g===BQ?'cf':''}'><h3><span>${k.g===BQ?'&#9749; ':''}${k.k.split('|')[0].trim()}</span><span class='ctl'>${bModo}<span class='grp'><button class='ord-btn ${tends[k.k]?'on':''}' onclick='setTend(${i},this)' title='Mostrar/ocultar linha de tendência'>&#128200; Tendência</button></span><span class='grp'><button class='ord-btn ${o==='melhor'?'on':''}' onclick='setOrd(${i},"melhor",this)'>&#9650; Melhor</button><button class='ord-btn ${o==='pior'?'on':''}' onclick='setOrd(${i},"pior",this)'>&#9660; Atenção</button></span></span></h3><div class='gsub' id='gs${i}'></div><div class='cht'><canvas id='cG${i}'></canvas></div></div>`;}).join('');
+    cont.innerHTML=gKpis.map((k,i)=>{const o=ords[k.k]||'melhor',md=modos[k.k]||'mes';const bModo=multiMes?`<span class='grp'><button class='ord-btn ${md==='mes'?'on':''}' onclick='setModo(${i},"mes",this)'>M&ecirc;s a m&ecirc;s</button><button class='ord-btn ${md==='per'?'on':''}' onclick='setModo(${i},"per",this)'>Per&iacute;odo</button></span>`:'';return`<div class='card ${k.g===BQ?'cf':''}'><h3><span>${k.g===BQ?'&#9749; ':''}${k.k.split('|')[0].trim()}</span><span class='ctl'>${bModo}<span class='grp'><button class='ord-btn ${tends[k.k]?'on':''}' onclick='setTend(${i},this)' title='Mostrar/ocultar linha de tend&ecirc;ncia'>&#128200; Tend&ecirc;ncia</button></span><span class='grp'><button class='ord-btn ${o==='melhor'?'on':''}' onclick='setOrd(${i},"melhor",this)'>&#9650; Melhor</button><button class='ord-btn ${o==='pior'?'on':''}' onclick='setOrd(${i},"pior",this)'>&#9660; Aten&ccedil;&atilde;o</button></span></span></h3><div class='gsub' id='gs${i}'></div><div class='cht'><canvas id='cG${i}'></canvas></div></div>`;}).join('');
     cont.dataset.sig=sig;
   }
   CTX={f,dFilt,lojas,mesesIdx,multiMes,perT,colsR,pLojaOrig:pLoja};
@@ -416,9 +416,9 @@ const PUBLICADO=location.protocol!=='file:';
 const EXPIRADO=PUBLICADO&&VALIDADE&&new Date()>new Date(VALIDADE+'T23:59:59');
 if(EXPIRADO){
   ['.layout','.periodo','.acoes'].forEach(q=>{const e=document.querySelector(q);if(e)e.remove();});
-  document.querySelector('header').insertAdjacentHTML('afterend',`<div class='exp'><h2>&#9203; Este dashboard expirou</h2><p>A versão publicada era válida até <b>${dataBR(VALIDADE)}</b>.</p><p>Solicite a versão atualizada.</p></div>`);
+  document.querySelector('header').insertAdjacentHTML('afterend',`<div class='exp'><h2>&#9203; Este dashboard expirou</h2><p>A vers&atilde;o publicada era v&aacute;lida at&eacute; <b>${dataBR(VALIDADE)}</b>.</p><p>Solicite a vers&atilde;o atualizada.</p></div>`);
 }else{
-  if(PUBLICADO&&VALIDADE){const sv=document.getElementById('selVal');sv.innerHTML=`&#9203; Link válido até <b>${dataBR(VALIDADE)}</b>`;sv.style.display='inline-block';}
+  if(PUBLICADO&&VALIDADE){const sv=document.getElementById('selVal');sv.innerHTML=`&#9203; Link v&aacute;lido at&eacute; <b>${dataBR(VALIDADE)}</b>`;sv.style.display='inline-block';}
   try{
     if(!Array.isArray(D)||!D.length)mostraErro('A base veio vazia: nenhuma linha foi lida da aba INDICADORES OBJETIVOS.');
     else init();
