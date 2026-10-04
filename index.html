@@ -160,7 +160,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPI</h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 04/10/2026 20:05</small>
+<div><h1>Dashboard KPI</h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 04/10/2026 20:14</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>03/10/2026 08:10 | Dados até: 30/09/2026</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -286,11 +286,12 @@ function cor3(at,hm,v,k){if(k&&k.b===1)return at===null?'az':at>=1?'az':'vm';if(
 function corH(at,hm,v,k){return HEX[cor3(at,hm,v,k)];}
 function barra(at){
   if(at===null||isNaN(at))return'';
-  const esc=Math.min(2,Math.max(1.2,Math.ceil((at+0.05)*10)/10));const p=x=>Math.max(0,Math.min(x,esc))/esc*100;
+  const esc=at>1?Math.min(2,Math.ceil((at+0.05)*10)/10):1;const p=x=>Math.max(0,Math.min(x,esc))/esc*100;
   const m=p(1),w=p(at),ok=at>=1;const dif=Math.abs((at-1)*100).toFixed(1).replace('.',',');
   const fil=ok?`<div class='fil ok' style='width:${m}%'></div><div class='exc' style='left:${m}%;width:${w-m}%'></div>`:`<div class='fil nok' style='width:${w}%'></div>`;
   const txt=ok?(at===1?'&#10004; Meta batida (100%)':`&#9650; ${dif} p.p. acima da meta`):`&#9660; Faltam ${dif} p.p. para 100%`;
-  return`<div class='kbar'><div class='trk'>${fil}<div class='m100' style='left:${m}%'></div></div><div class='esc'><span style='left:0'>0%</span><span class='l100' style='left:${m}%'>100%</span></div><div class='ktx ${ok?'ok':'nok'}'>${txt}</div></div>`;
+  const mk=at>1?`<div class='m100' style='left:${m}%'></div>`:'';const lb=at>1?`<span class='l100' style='left:${m}%'>100%</span>`:`<span class='l100' style='left:auto;right:0;transform:none'>100%</span>`;
+  return`<div class='kbar'><div class='trk'>${fil}${mk}</div><div class='esc'><span style='left:0'>0%</span>${lb}</div><div class='ktx ${ok?'ok':'nok'}'>${txt}</div></div>`;
 }
 const sel=id=>[...document.getElementById(id).selectedOptions].map(o=>o.value);
 function med(a){const x=a.filter(v=>v!==null&&!isNaN(v));return x.length?x.reduce((s,v)=>s+v,0)/x.length:null;}
