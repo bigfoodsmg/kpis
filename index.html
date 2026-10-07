@@ -166,6 +166,7 @@ body.claro .seg-tb tr.sub td{background:#e5e7eb}body.claro .seg-tb tr.tot td{bac
 body:not(.claro),body:not(.claro) .main{background:#202020;color:#e4e4e4}body:not(.claro) .top,body:not(.claro) .periodo{background:#1c1c1c;border-color:#333}body:not(.claro) .side{background:#202020;border-color:#333}body:not(.claro) .card,body:not(.claro) .kc{background:#2b2b2b;border-color:#3a3a3a}body:not(.claro) .card h3{border-bottom-color:#3a3a3a}
 body:not(.claro) .kc.vd{background:#143d22;border-color:#22c55e99}body:not(.claro) .kc.am{background:#4a3410;border-color:#f59e0b99}body:not(.claro) .kc.vm{background:#4d1a20;border-color:#ef444499}body:not(.claro) .kc.az{background:#16305a;border-color:#4a9eff99}body:not(.claro) .kc.cf{background:#45301a;border-color:#b7791f99}body:not(.claro) select,body:not(.claro) .sb,body:not(.claro) .at,body:not(.claro) .dd-btn,body:not(.claro) .ord-btn,body:not(.claro) .btn-top,body:not(.claro) .btn-lmp{background:#2d2d2d;border-color:#454545}
 body:not(.claro) th{background:#323232;border-bottom-color:#3a3a3a}body:not(.claro) td{border-bottom-color:#353535}body:not(.claro) tr:hover td{background:#333}body:not(.claro) .dd-pan{background:#2b2b2b}body:not(.claro) .seg-box{background:#2b2b2b;border-color:#3a3a3a}body:not(.claro) .seg-hd,body:not(.claro) .seg-tb th{background:#1c1c1c}body:not(.claro) .seg-c{background:#323232;border-color:#3f3f3f}body:not(.claro) .seg-tb tr.sub td{background:#353535}
+@media(max-width:1700px){.s-graf.g3{grid-template-columns:1fr 1fr}}.card h3{flex-wrap:wrap;row-gap:4px}
 </style></head><body>
 <div id='erroJS'></div>
 <script>
@@ -177,7 +178,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPI</h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 07/10/2026 08:57</small>
+<div><h1>Dashboard KPI</h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 07/10/2026 14:32</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>07/10/2026 08:54 | Dados de vendas e delivery até: 06/10/2026 | Demais dados até: 30/09/2026</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -519,6 +520,7 @@ function render(){
 }
 function limpar(){segAt=null;ords={};modos={};tends={};ordRank={col:null,dir:'asc'};document.getElementById('grafCont').dataset.sig='';document.querySelectorAll('.sb,.at').forEach(b=>b.classList.remove('on'));['fL','fK'].forEach(id=>[...document.getElementById(id).options].forEach(o=>o.selected=false));periodoPadrao();document.getElementById('fG').value='';render();}
 if(typeof Chart!=='undefined'){Chart.defaults.font.family='Segoe UI,Arial,sans-serif';Chart.defaults.font.size=10;}
+if(typeof Chart!=='undefined'){Chart.defaults.scales.category.ticks.autoSkip=false;Chart.defaults.scales.category.ticks.maxRotation=50;}
 if(typeof Chart!=='undefined')Chart.defaults.devicePixelRatio=Math.max(window.devicePixelRatio||1,3);
 try{if(localStorage.getItem('kpiTema')==='claro')aplicaTema(true);}catch(e){}
 function dataBR(iso){const p=iso.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
