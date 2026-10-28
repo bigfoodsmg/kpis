@@ -224,7 +224,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPIs <span class='ver'>V 4.2</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 28/10/2026 10:35 &bull; &copy; 2026 Big Foods</small>
+<div><h1>Dashboard KPIs <span class='ver'>V 4.3</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 28/10/2026 10:59 &bull; &copy; 2026 Big Foods</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>28/10/2026 08:39 | Indicadores do grupo Vendas, P&amp;L, Tempos, CSS, DSF,SMP, Delivery atualizados com dados até 27/10</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -861,7 +861,7 @@ function render(){
     const pc=platCard(kpi,lojas,f);if(pc){v=pc.v;ex=true;}
     const at=ating(v,kpi.m,kpi.s);const hm=kpi.m!==null;const cl=cor3(at,hm,v,kpi);
     const tag=lojas.length>1?`<div class='kag'>${(tot||ex)?'Total das lojas':'M&eacute;dia por loja'}</div>`:'';
-    const ico='';const ehInop=/inoper/i.test(kpi.k);const ate=kpi.tvg?ateDia(DIAV,lojas,f.idx):ehInop?ateDia(DIAI,lojas,f.idx):(kpi.g==='Delivery'?(ateDL(lojas,f.idx)||ateMsg(kpi,f.idx)):ateMsg(kpi,f.idx));
+    const ico='';const ehInop=/inoper/i.test(kpi.k);const ate=kpi.tvg?ateDia(DIAV,lojas,f.idx):ehInop?ateDia(DIAI,lojas,f.idx):(ateMsg(kpi,f.idx)||(kpi.g==='Delivery'?ateDL(lojas,f.idx):''));
     const sub=(ehInop?`<span style='display:block;font-size:11px;font-weight:600;opacity:.75;margin-top:2px;text-transform:none'>Cold e Dessert</span>`:'')+(ate?`<span style='display:block;font-size:11px;font-weight:600;opacity:.75;margin-top:2px;text-transform:none'>&#128197; ${ate}</span>`:'')+(pc?`<span style='display:block;font-size:11px;font-weight:600;opacity:.75;margin-top:2px;text-transform:none'>${pc.t}</span>`:'');
     return`<div class='kc ${cl}' data-k='${ea(kpi.k)}' onclick='irGrafico(this)' title='Ver gr&aacute;fico'><div class='kt'>${ico}${kpi.k}${sub}</div>${tag}<div class='kv'>${fmtC(v,kpi.f)}</div>${kpi.b===1?barra(at):''}<div class='km'>Meta: ${hm?fmtC(kpi.m,kpi.f,1):'-'}</div></div>`;
   }).join('')||`<div style='padding:8px;color:#888'>Nenhum KPI no grupo.</div>`;
