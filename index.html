@@ -224,7 +224,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPIs <span class='ver'>V 4.4</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 29/10/2026 08:49 &bull; &copy; 2026 Big Foods</small>
+<div><h1>Dashboard KPIs <span class='ver'>V 4.5</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 29/10/2026 09:56 &bull; &copy; 2026 Big Foods</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>29/10/2026 08:41 | Indicadores do grupo Vendas, P&amp;L, Tempos, CSS, DSF,SMP, Delivery, Bebidas, atualizados com dados até 28/10</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -337,7 +337,12 @@ function ateMsg(k,idx){const M=msgInfo();if(!M.ok||!idx||!idx.length||!msgCobre(
 function ateDL(ls,idx){try{if(!idx||!idx.length||typeof DLM==='undefined')return '';const p=P[idx[idx.length-1]];if(!p)return '';const r=[];
   [['ifUd','iFood'],['n9Ud','99']].forEach(([c,nm])=>{let mx=0;ls.forEach(l=>{const o=DLM[String(l).toUpperCase()+'|'+p.a+'|'+p.m];const v=o?+o[c]:0;if(v>mx)mx=v;});if(mx)r.push(nm+' até '+String(mx).padStart(2,'0')+'/'+String(p.m).padStart(2,'0'));});
   return r.join(' · ');}catch(e){return '';}}
-function ateKpi(k,ls,idx){const ei=/inoper/i.test(k.k);return k.tvg?ateDia(DIAV,ls,idx):ei?ateDia(DIAI,ls,idx):(ateMsg(k,idx)||(k.g==='Delivery'?ateDL(ls,idx):''));}
+function ultMes(k,ls,idx){const L=ls.map(String);for(let i=idx[idx.length-1];i>=0;i--){if(D.some(r=>r.k===k.k&&L.includes(r.l)&&num(r.v[i])!==null))return i;}return -1;}
+function regraFech(k,ls,idx){const n=nrm(k.k);const q=/margem bruta controlaveis|lucro potencial|ratio oleo|giro de estoque|treinamento/.test(n),c=/margem bruta p&l|payroll|^pac\b|^soi\b/.test(n);if(!q&&!c)return null;
+  if(!idx||!idx.length)return '';const p=P[idx[idx.length-1]],i=ultMes(k,ls,idx);if(i<0)return '';const u=P[i];const dd=(d,m)=>String(d).padStart(2,'0')+'/'+String(m).padStart(2,'0'),fim=(a,m)=>new Date(a,m,0).getDate();
+  if(c||u.a*12+u.m<p.a*12+p.m)return 'Dados at\u00e9 '+dd(fim(u.a,u.m),u.m);const M=msgInfo();
+  if(M.ok&&u.a===M.a&&u.m===M.m&&M.d<fim(u.a,u.m))return 'Dados at\u00e9 '+dd(15,u.m);return 'Dados at\u00e9 '+dd(fim(u.a,u.m),u.m);}
+function ateKpi(k,ls,idx){const ei=/inoper/i.test(k.k);if(k.tvg)return ateDia(DIAV,ls,idx);if(ei)return ateDia(DIAI,ls,idx);const rf=regraFech(k,ls,idx);if(rf!==null)return rf;return ateMsg(k,idx)||(k.g==='Delivery'?ateDL(ls,idx):'');}
 function parcial(k,ls,idx){try{if(!idx||!idx.length)return null;const p=P[idx[idx.length-1]];if(!p)return null;const t=ateKpi(k,ls,idx);const ms=[...String(t).matchAll(/(\d{2})\/(\d{2})/g)].filter(x=>+x[2]===p.m);if(!ms.length)return null;
   const d=Math.min(...ms.map(x=>+x[1])),dim=new Date(p.a,p.m,0).getDate();if(d>=dim)return null;const dm=String(d).padStart(2,'0')+'/'+String(p.m).padStart(2,'0');return{d,m:p.m,dm,txt:MC[p.m]+' at\u00e9 '+dm};}catch(e){return null;}}
 function ateDia(mp,ls,idx){if(!idx||!idx.length)return '';const p=P[idx[idx.length-1]];if(!p)return '';const mm=String(p.m).padStart(2,'0'),dd=x=>String(x).padStart(2,'0')+'/'+mm;
