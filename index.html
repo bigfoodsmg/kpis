@@ -234,7 +234,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPIs <span class='ver'>V 5.5</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 02/11/2026 21:21 &bull; &copy; 2026 Big Foods</small>
+<div><h1>Dashboard KPIs <span class='ver'>V 5.5</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 02/11/2026 21:27 &bull; &copy; 2026 Big Foods</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>02/11/2026 13:09 | Indicadores do grupo Vendas, P&amp;L, Tempos, CSS, DSF,SMP, Delivery, Bebidas,Banco Horas, Quadro, atualizados com dados até 01/11</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -900,7 +900,7 @@ function abrePlat(l){
 const CR_IND=[['PERDA_ALIMENTO','Perda alimento %','R$'],['DESP_PAO','Desperd\u00edcio p\u00e3o %','un'],['DESP_CARNES_VERMELHAS','Desp. carnes vermelhas %','un'],['DESP_CARNES_BRANCAS','Desp. carnes brancas %','un']];
 const CR_REND=['MIX','MIX POR HT','COBERTURA','BATATA','CHEDDAR BISNAGA','BACON'];let CRM=null,CR_VOLTA=null,CR_K=null,CR_LS=null,CR_ORD={c:'PERDA_ALIMENTO.r',d:-1};
 function crKey(r,c){if(c==='LOJA')return r.l;const p=c.split('.'),x=r.ind[p[0]]||{},v=x[p[1]];if(v===null||v===undefined)return null;return p[0]==='PERDA_ALIMENTO'&&p[1]==='v'?-v:v;}
-function crOrdena(c){if(CR_ORD.c===c)CR_ORD.d=-CR_ORD.d;else{CR_ORD.c=c;CR_ORD.d=c==='LOJA'?1:-1;}abreCtrl(CR_LS,true);}
+function crOrdena(c){if(CR_ORD.c===c)CR_ORD.d=-CR_ORD.d;else{CR_ORD.c=c;CR_ORD.d=c==='LOJA'?1:-1;}const ov=document.getElementById('segOv'),y=ov?ov.scrollTop:0;abreCtrl(CR_LS,true);if(ov)ov.scrollTop=y;}
 function crTh(c,t,n){const on=CR_ORD.c===c,st=on?(CR_ORD.d<0?'&#9660;':'&#9650;'):'&#8645;';return `<th class='${n?'cr-n ':''}cr-ord' title='Ordenar' onclick='crOrdena(&quot;${c}&quot;)'>${t} <span class='cr-seta${on?' on':''}'>${st}</span></th>`;}
 function ctrlKpi(k){return !!(k&&CR.length&&/margem bruta controlaveis|lucro potencial/.test(nrm(k.k)));}
 function crMonta(){const o={};CR.forEach(e=>{const k=e[0]+'|'+e[1]+'|'+e[2];const r=o[k]||(o[k]={l:e[0],a:e[1],m:e[2],ini:e[3],fim:e[4],g:e[5],ind:{},rend:{},rk:[],ganho:[],perda:[]});
