@@ -235,7 +235,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPIs <span class='ver'>V 6.0</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 12/11/2026 09:51 &bull; &copy; 2026 Big Foods</small>
+<div><h1>Dashboard KPIs <span class='ver'>V 6.0</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 12/11/2026 10:00 &bull; &copy; 2026 Big Foods</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>12/11/2026 08:50 | Indicadores do grupo Vendas, Tempos, CSS, DSF,SMP, Delivery, atualizados com dados até 11/11</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -713,7 +713,7 @@ function totPer(t,f,agg){const idx=f.idx||[];if(!idx.length||!t)return null;cons
 if(umAno&&t.t!==null&&t.t!==undefined&&idx.length===P.length)return num(t.t);
 const sl=idx.map(i=>num(t.v[i])).filter(v=>v!==null);if(!sl.length)return null;if(agg==='last')return sl[sl.length-1];return agg==='sum'?sl.reduce((a,b)=>a+b,0):sl.reduce((a,b)=>a+b,0)/sl.length;}
 const MC=['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-const CORES_MES=['#1e3a8a','#39e600','#991b1b','#00d8ff','#4c1d95','#d4ff00','#14532d','#ff6d00','#1d4ed8','#a3e635','#6d28d9','#00e5b0'];
+const CORES_MES=['#e5e7eb','#d9dce1','#cdd1d7','#c1c6cd','#b5bbc3','#a9b0b9','#9ca3af','#8f97a3','#828b97','#757f8b','#6b7280'];
 const CORES_CAFE=['#b7791f','#7c4a1e','#e0a458','#a16207','#d97706','#92400e','#fbbf24','#78350f','#f5c27a'];
 const BQ='Bebidas Quentes';
 const HEX={vd:'#22c55e',am:'#f59e0b',vm:'#ef4444',az:'#4a9eff',cf:'#b7791f'};
@@ -919,7 +919,7 @@ function desenhaG(i){
   const extra=tLine.concat(mLine);const pal=kObj.g===BQ?CORES_CAFE:CORES_MES;
   const lblT=ctx=>ctx.dataset.type==='line'?ctx.dataset.label+': '+fmtV(ctx.raw,kObj.f):null;
   if(modo==='mes'){
-    const ds=mesesIdx.map((mi,ci)=>({label:MC[P[mi].m]+(pa&&mi===uM?'*':''),data:sorted.map(x=>valKpiMes(kObj,x.l,x.row,mi,plat)),backgroundColor:pal[ci%pal.length],borderRadius:3,order:1})).concat(extra);
+    const ds=mesesIdx.map((mi,ci)=>({label:MC[P[mi].m]+(pa&&mi===uM?'*':''),data:sorted.map(x=>valKpiMes(kObj,x.l,x.row,mi,plat)),backgroundColor:pal===CORES_MES?(ci===mesesIdx.length-1?'#2563eb':pal[Math.max(0,pal.length-(mesesIdx.length-1-ci))]):pal[ci%pal.length],borderRadius:3,order:1})).concat(extra);
     mkChart(cId,'bar',rot,ds,{plugins:{tendLoja:{on:!!tends[kObj.k],s:kObj.s,f:kObj.f},legend:{display:true,position:'top',labels:{boxWidth:8,color:TH.tx,font:{size:9},filter:it=>it.text!=='Meta 100%'}},tooltip:{callbacks:{label:ctx=>{const t=lblT(ctx)||ctx.dataset.label+': '+fmtV(ctx.raw,kObj.f)+(pa&&String(ctx.dataset.label).slice(-1)==='*'?' (dados at\u00e9 '+pa.dm+')':'');const m=ctx.dataset.type==='line'?'':mdBQ(kObj,ctx.raw,[mesesIdx[ctx.datasetIndex]],pa,uM);return m?[t,m]:t;},footer:it=>{const x=sorted[it[0].dataIndex];return x&&x.v!==null?perT+': '+fmtV(x.v,kObj.f):'';}}}},scales:{x:{grid:{color:TH.grid},ticks:{color:TH.tx,font:{size:9}}},y:{grid:{color:TH.grid},ticks:{color:TH.ty,callback:v=>fmtV(v,kObj.f)}}}});
   } else {
     mkChart(cId,'bar',rot,[{label:perT,data:sorted.map(x=>x.v),backgroundColor:sorted.map(x=>corH(ating(x.v,kObj.m,kObj.s),hm,x.v,kObj)),borderRadius:4,order:1}].concat(extra),{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const t=lblT(ctx)||(multiMes?perT+': ':'')+fmtV(ctx.raw,kObj.f);const m=ctx.dataset.type==='line'?'':mdBQ(kObj,ctx.raw,mesesIdx,pa,uM);return m?[t,m]:t;}}}},scales:{x:{grid:{color:TH.grid},ticks:{color:TH.tx,font:{size:9}}},y:{grid:{color:TH.grid},ticks:{color:TH.ty,callback:v=>fmtV(v,kObj.f)}}}});
