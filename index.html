@@ -235,7 +235,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPIs <span class='ver'>V 6.0</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 12/11/2026 09:16 &bull; &copy; 2026 Big Foods</small>
+<div><h1>Dashboard KPIs <span class='ver'>V 6.0</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 12/11/2026 09:29 &bull; &copy; 2026 Big Foods</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>12/11/2026 08:50 | Indicadores do grupo Vendas, Tempos, CSS, DSF,SMP, Delivery, atualizados com dados até 11/11</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -713,7 +713,7 @@ function totPer(t,f,agg){const idx=f.idx||[];if(!idx.length||!t)return null;cons
 if(umAno&&t.t!==null&&t.t!==undefined&&idx.length===P.length)return num(t.t);
 const sl=idx.map(i=>num(t.v[i])).filter(v=>v!==null);if(!sl.length)return null;if(agg==='last')return sl[sl.length-1];return agg==='sum'?sl.reduce((a,b)=>a+b,0):sl.reduce((a,b)=>a+b,0)/sl.length;}
 const MC=['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-const CORES_MES=['#4a9eff','#22c55e','#f59e0b','#ef4444','#a78bfa','#34d399','#fb923c','#60a5fa','#f472b6'];
+const CORES_MES=['#1e3a8a','#0f766e','#64748b','#b45309','#3b82f6','#15803d','#a8a29e','#0e7490','#ca8a04','#334155','#2563eb','#166534'];
 const CORES_CAFE=['#b7791f','#7c4a1e','#e0a458','#a16207','#d97706','#92400e','#fbbf24','#78350f','#f5c27a'];
 const BQ='Bebidas Quentes';
 const HEX={vd:'#22c55e',am:'#f59e0b',vm:'#ef4444',az:'#4a9eff',cf:'#b7791f'};
