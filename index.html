@@ -226,6 +226,12 @@ body.claro .pgb{background:#f9fafb;color:#0b3860;border-color:#ccc}body.claro .p
 @media print{.pl-grid{grid-template-columns:3fr 2fr}.cht.pl-h{height:300px}}
 </style></head><body>
 <div id='erroJS'></div>
+<div id='avSafari' style='display:none;margin:10px;padding:12px 14px;background:#1a1206;border:2px solid #f59e0b;border-left:9px solid #f59e0b;border-radius:7px;color:#fde68a;font-size:14px;line-height:1.5'>
+<b style='color:#fff;display:block;margin-bottom:4px;font-size:15px'>&#128241; Abra pelo Chrome</b>
+No iPhone, o Safari pode travar o c&oacute;digo de acesso. Se pedir o c&oacute;digo e ele n&atilde;o chegar, copie o link e abra no <b>Google Chrome</b>.
+</div>
+<script>(function(){try{var ua=navigator.userAgent||'';var iOS=/iPhone|iPad|iPod/.test(ua);var cr=/CriOS/.test(ua);if(iOS&&!cr){var e=document.getElementById('avSafari');if(e)e.style.display='block';}}catch(e){}})();
+</script>
 <script>
 function mostraErro(m,extra){var e=document.getElementById('erroJS');if(!e)return;
   e.style.display='block';e.innerHTML='<b>&#9888; O dashboard n&atilde;o conseguiu montar a tela</b>Mande este texto para o Marcos ajustar a macro:<code>'+String(m)+(extra?' | '+extra:'')+'</code>';}
@@ -235,7 +241,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPIs <span class='ver'>V 6.0</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 13/11/2026 15:07 &bull; &copy; 2026 Big Foods</small>
+<div><h1>Dashboard KPIs <span class='ver'>V 6.0</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 13/11/2026 15:18 &bull; &copy; 2026 Big Foods</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>13/11/2026 08:59 | Indicadores do grupo Vendas, Tempos, CSS, DSF,SMP, Delivery, atualizados com dados até 12/11</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
