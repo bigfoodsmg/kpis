@@ -236,7 +236,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPIs <span class='ver'>V 6.0</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 23/11/2026 18:46 &bull; &copy; 2026 Big Foods</small>
+<div><h1>Dashboard KPIs <span class='ver'>V 6.0</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 23/11/2026 18:51 &bull; &copy; 2026 Big Foods</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>23/11/2026 17:14 | Indicadores do grupo Vendas, Tempos, CSS, DSF,SMP, Delivery,Controláveis atualizados com dados até 22/11</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -1282,7 +1282,7 @@ function renderPlat(f,lojas,idx,perT,kAll){
   const pct=v=>TT?(v/TT*100).toFixed(1).replace('.',',')+'%':'-';
   const avisos=[];
   if(!temIf)avisos.push('A venda do iFood n\u00e3o veio do modelo (a consulta reduzida n\u00e3o traz esse campo). Veja o aviso ao gerar o dashboard.');
-  {const cs=d.filter(x=>x.ct).map(x=>x.ct);if(cs.length){const c=Math.min(...cs.map(x=>x.c)),mm=String(cs[0].m).padStart(2,'0');avisos.push(`O iFood est\u00e1 entregando dados s\u00f3 at\u00e9 ${String(c).padStart(2,'0')}/${mm}, mesmo baixando depois. Para comparar na mesma janela, este painel calcula iFood, 99Food, PDV e Delivery Prop de 01/${mm} at\u00e9 ${String(c).padStart(2,'0')}/${mm}.`);}}
+  let avCt='',ctAte='';{const cs=d.filter(x=>x.ct).map(x=>x.ct);if(cs.length){const c=Math.min(...cs.map(x=>x.c)),mm=String(cs[0].m).padStart(2,'0');ctAte=String(c).padStart(2,'0')+'/'+mm;avCt=`O iFood est\u00e1 entregando dados s\u00f3 at\u00e9 ${String(c).padStart(2,'0')}/${mm}, mesmo baixando depois. Para comparar na mesma janela, este painel calcula iFood, 99Food, PDV e Delivery Prop de 01/${mm} at\u00e9 ${String(c).padStart(2,'0')}/${mm}.`;avisos.push(avCt);}}
   d.filter(x=>x.prOn&&x.prAv).forEach(x=>avisos.push(`Delivery Prop da ${x.l} oculto: ${x.prAv}.`));
   const av=avisos.map(a=>`<span class='pl-av'>&#9888; ${a}</span>`).join('');
   const bMet=`<span class='grp'>${plBtn('R$','pf-all',met==='v','met','v')}${plBtn('Pedidos','pf-all',met==='q','met','q')}</span>`;
@@ -1294,11 +1294,11 @@ function renderPlat(f,lojas,idx,perT,kAll){
   // tabela de operacao
   const tab=PL.tab||(PLAT_G==='tot'?'tot':PLAT_G);
   const uni=[...new Set(cb.mb.ifm.concat(cb.mb.n9m))];const gp=a=>{const pq=parcial({g:'Delivery',k:'Delivery',tvg:''},d.map(x=>x.l),a);return `<span class='g-per'>\u2022 ${perDados(a,perT)}${pq?' ('+(a.length>1?pq.txt:'at\u00e9 '+pq.dm)+')':''}</span>`;};
-  const per1=gp(pf==='if'?cb.mb.ifm:pf==='n9'?cb.mb.n9m:pf==='pr'?cb.mb.ok:uni),per2=gp(uni),per3=gp(tab==='if'?cb.mb.ifm:tab==='n9'?cb.mb.n9m:uni),per4=gp(cb.mb.ok);
+  const fxA=s=>ctAte?s.replace(/at\u00e9 \d\d\/\d\d/,'at\u00e9 '+ctAte):s,per1=fxA(gp(pf==='if'?cb.mb.ifm:pf==='n9'?cb.mb.n9m:pf==='pr'?cb.mb.ok:uni)),per2=fxA(gp(uni)),per3=gp(tab==='if'?cb.mb.ifm:tab==='n9'?cb.mb.n9m:uni),per4=gp(cb.mb.ok);
   const lin=ordTab(d,idx,tab);
   sec.innerHTML=bannerDL()+`<div class='pl-grid'>
 <div class='card'><h3><span>Venda de delivery por loja e plataforma ${per1}${fsb('cPL1')}</span><span class='ctl'>${bMet}${bPf}</span></h3><div class='gsub'>${resumo}</div>${av}<div class='cht pl-h'><canvas id='cPL1'></canvas></div></div>
-<div class='card'><h3><span>Mix por plataforma ${per2}${fsb('cPL2')}</span><span class='ctl'>${bMet}</span></h3><div class='gsub'>% de cada plataforma sobre o total da loja (${met==='v'?'venda':'pedidos'})</div><div class='cht pl-h'><canvas id='cPL2'></canvas></div></div>
+<div class='card'><h3><span>Mix por plataforma ${per2}${fsb('cPL2')}</span><span class='ctl'>${bMet}</span></h3><div class='gsub'>% de cada plataforma sobre o total da loja (${met==='v'?'venda':'pedidos'})</div>${avCt?`<span class='pl-av'>&#9888; ${avCt}</span>`:''}<div class='cht pl-h'><canvas id='cPL2'></canvas></div></div>
 </div>
 <div class='card'><h3><span>Opera\u00e7\u00e3o por plataforma ${per3}</span><span class='ctl'><span class='grp'>${plBtn('Consolidado','pf-tot',tab==='tot','tab','tot')}${plBtn('iFood','pf-if',tab==='if','tab','if')}${plBtn('99Food','pf-n9',tab==='n9','tab','n9')}</span></span></h3><div class='gsub'>Clique na loja para abrir o detalhe dela</div><div style='overflow-x:auto'>${lin}</div></div>
 ;”`
