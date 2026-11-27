@@ -246,7 +246,7 @@ window.onerror=function(m,u,l,c){mostraErro(m,'linha '+l+', coluna '+c);};
 <img class='mclogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/logo.png' alt='McDonalds'>
 <span class='sep'></span>
 <img class='hlogo' src='https://raw.githubusercontent.com/marcosdonalds09-dot/dashboard-saidas-limpo/main/cabecalho.png' alt='Big Foods'>
-<div><h1>Dashboard KPIs <span class='ver'>V 6.3</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 27/11/2026 08:54 &bull; &copy; 2026 Big Foods</small>
+<div><h1>Dashboard KPIs <span class='ver'>V 6.3</span></h1><small>Big Foods &bull; Indicadores Operacionais &bull; Dashboard gerado em 27/11/2026 09:00 &bull; &copy; 2026 Big Foods</small>
 <div class='selos'>
 <div class='atu'>&#128197; Base de dados atualizada em <b>27/11/2026 07:39 | Indicadores do grupo Vendas, Tempos, CSS, DSF,SMP, Delivery,Controláveis atualizados com dados até 26/11</b></div>
 <div class='atu val' id='selVal' style='display:none'></div>
@@ -1825,8 +1825,8 @@ function shF(v){return v===null||v===undefined||isNaN(v)?'-':(v*100).toFixed(1).
 function shMed(a){a=a.filter(x=>x!==null&&x!==undefined&&!isNaN(x));return a.length?a.reduce((s,x)=>s+x,0)/a.length:null;}
 function shUlt(){let u=0;SHR_D.forEach(e=>{const c=e[1]*100+e[2];if(c>u)u=c;});return u;}
 function shMesC(c){return MC[c%100]+'/'+String(Math.floor(c/100)).slice(2);}
-function shLjs(){const ls=[...new Set(SHR_D.map(e=>e[0]))].sort();const s=(CTX&&CTX.lojas&&CTX.lojas.length)?CTX.lojas:ls;return ls.filter(l=>s.includes(l));}
-function shTodas(){return !CTX||!CTX.lojas||LOJAS_ALL.every(l=>CTX.lojas.includes(l));}
+function shAll(){return [...new Set(SHR_D.map(e=>e[0]))].sort();}function shSL(){const o=document.getElementById('segOv');return(SH&&SH.ls&&o&&o.classList.contains('on')&&o.querySelector('.sh'))?SH.ls:null;}function shLjs(){const ls=shAll();const s=shSL()||((CTX&&CTX.lojas&&CTX.lojas.length)?CTX.lojas:ls);return ls.filter(l=>s.includes(l));}
+function shTodas(){const q=shSL();if(q)return shAll().every(l=>q.includes(l));return !CTX||!CTX.lojas||LOJAS_ALL.every(l=>CTX.lojas.includes(l));}
 function shVal(c,ljs){if(shTodas()&&SH_TT[c]!==undefined)return SH_TT[c];return shMed(SHR_D.filter(e=>e[1]*100+e[2]===c&&ljs.includes(e[0])).map(e=>e[3]));}
 function shPer(){if(!CTX||!CTX.f)return null;const f=CTX.f,ljs=shLjs();if(!ljs.length)return null;const a=+f.ano;let cs=[];for(let m=+f.mi;m<=+f.mf;m++){const c=a*100+m;if(SHR_D.some(e=>e[1]*100+e[2]===c&&ljs.includes(e[0])))cs.push(c);}let nota='';
 if(!cs.length){const fim=a*100+(+f.mf);let u=0;SHR_D.forEach(e=>{const c=e[1]*100+e[2];if(c<=fim&&c>u&&ljs.includes(e[0]))u=c;});if(!u)return null;cs=[u];nota='Mostrando '+shMesC(u);}return{cs,nota,ljs};}
@@ -1837,14 +1837,15 @@ const kt=c.querySelector('.kt');if(kt)kt.innerHTML=`Share | Brasil<span style='d
 const kv=c.querySelector('.kv');if(kv)kv.textContent=shF(v);let gp=c.querySelector('.sh-gap');if(!gp&&kv){gp=document.createElement('div');gp.className='sh-gap';kv.after(gp);}
 if(gp)gp.innerHTML=g===null?(v===null?'':'Brasil do m\u00eas ainda n\u00e3o lan\u00e7ado'):(g>=0?'&#9650; +':'&#9660; ')+g.toFixed(1).replace('.',',')+' p.p. vs Brasil';
 const ag=c.querySelector('.kag');if(ag)ag.textContent=shTodas()?'Total das lojas':'M\u00e9dia por loja';const km=c.querySelector('.km');if(km)km.textContent='Meta (Brasil): '+shF(b);}
-function shAbre(){const pr=shPer();SH={t:SH?SH.t:'lin',v:SH?SH.v:'evo',m:pr?pr.cs[pr.cs.length-1]:shUlt()};let ov=document.getElementById('segOv');if(!ov){ov=document.createElement('div');ov.id='segOv';ov.className='seg-ov';ov.onclick=e=>{if(e.target===ov)fechaSeg();};document.body.appendChild(ov);}
+function shAbre(){const pr=shPer(),l0=shLjs();SH={t:SH?SH.t:'lin',v:SH?SH.v:'evo',m:pr?pr.cs[pr.cs.length-1]:shUlt(),ls:l0.slice()};let ov=document.getElementById('segOv');if(!ov){ov=document.createElement('div');ov.id='segOv';ov.className='seg-ov';ov.onclick=e=>{if(e.target===ov)fechaSeg();};document.body.appendChild(ov);}
 ov.classList.add('on');document.body.classList.add('fs-on');shRender();}
-function shSet(k,v){SH[k]=v;shRender();}
+function shSet(k,v){SH[k]=v;shRender();}function shTg(l){const a=SH.ls.slice(),i=a.indexOf(l);if(i>=0)a.splice(i,1);else a.push(l);if(!a.length)return;SH.ls=a;shRender();}function shTd(){SH.ls=shAll();shRender();}
 function shRender(){const ov=document.getElementById('segOv');if(!ov||!SH)return;const ljs=shLjs(),a=Math.floor(SH.m/100),cs=[...new Set(SHR_D.filter(e=>e[1]===a).map(e=>e[1]*100+e[2]))].sort((x,y)=>x-y);
 const bt=(on,t,fn)=>`<button class='sh-b${on?' on':''}' onclick='${fn}'>${t}</button>`;const per=SH.v==='evo'?(cs.length?shMesC(cs[0])+' a '+shMesC(cs[cs.length-1]):''):shMesC(SH.m);const nome=shTodas()?'Todas as lojas':ljs.join(', ');
 const sel=SH.v==='loj'?`<select class='sh-sel' onchange='shSet(&quot;m&quot;,+this.value)'>${cs.map(c=>`<option value='${c}'${c===SH.m?' selected':''}>${shMesC(c)}</option>`).join('')}</select>`:'';
 ov.innerHTML=`<div class='seg-box seg-gr sh'><div class='seg-hd'><h2>Share x Brasil<span class='rk-per'>&bull; ${nome} &bull; ${per}</span></h2><span class='seg-ac'><button class='seg-x' title='Fechar (Esc)' onclick='fechaSeg()'>&#10006;</button></span></div><div class='seg-bd'>`
 +`<div class='sh-ct'><b>Gr\u00e1fico</b>${bt(SH.t==='lin','Linha','shSet(&quot;t&quot;,&quot;lin&quot;)')}${bt(SH.t==='col','Colunas','shSet(&quot;t&quot;,&quot;col&quot;)')}<b>Ver</b>${bt(SH.v==='evo','Evolu\u00e7\u00e3o','shSet(&quot;v&quot;,&quot;evo&quot;)')}${bt(SH.v==='loj','Lojas no m\u00eas','shSet(&quot;v&quot;,&quot;loj&quot;)')}${sel}</div>`
++`<div class='sh-ct'><b>Lojas</b>${bt(shTodas(),'Todas','shTd()')}${shAll().map(l=>bt(SH.ls.includes(l),l,'shTg(&quot;'+l+'&quot;)')).join('')}</div>`
 +`<div class='sh-d'>Meta = share Brasil do mesmo m\u00eas. Verde: igual ou acima do Brasil. Vermelho: abaixo.</div><div class='sh-lg' id='shLg'></div><div id='shCh' style='width:100%'></div><div class='sh-tb' id='shTb'></div></div></div>`;
 shTab(ljs,cs);requestAnimationFrame(()=>shChart(ljs,cs));}
 function shChart(ljs,cs){const el=document.getElementById('shCh');if(!el)return;const W=Math.max(320,el.clientWidth||900),H=340,ml=46,mr=16,mt=26,mb=34,iw=W-ml-mr,ih=H-mt-mb;let cats,mv,bv,flat=false;
@@ -1867,6 +1868,7 @@ window.addEventListener('resize',()=>{const ov=document.getElementById('segOv');
 +'.sh-lg{display:flex;gap:16px;font-size:12px;margin:4px 0;flex-wrap:wrap}.sh-lg i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px}.sh-tb{overflow-x:auto}.sh-t{border-collapse:collapse;width:100%;font-size:12px;margin-top:12px}.sh-t th,.sh-t td{border:1px solid rgba(128,128,128,.3)!important;padding:5px 6px!important;text-align:center!important;font-size:12px!important}.sh-t th{background:#595959!important;color:#fff!important}.sh-t td:first-child{text-align:left!important;font-weight:bold;background:transparent!important;color:inherit!important}'
 +'.sh-t td.a{background:rgba(22,163,74,.16)!important;color:#16a34a!important}.sh-t td.z{background:rgba(220,38,38,.14)!important;color:#dc2626!important}.sh-t tr.t td{font-weight:bold}.sh-t tr.br td{font-weight:bold;color:#16a34a!important}.sh-gap{font-size:13px;font-weight:bold;margin-top:-4px}.kc.vd .sh-gap{color:#16a34a}.kc.vm .sh-gap{color:#dc2626}.kc.az .sh-gap{font-size:12px;font-weight:600;opacity:.7}.sh-vz{padding:30px;text-align:center;opacity:.7}';document.head.appendChild(s);})();
 {const _sh=render;render=function(){const r=_sh.apply(this,arguments);try{shCard();}catch(e){}return r;};}
+{const _fs=fechaSeg;fechaSeg=function(){const r=_fs.apply(this,arguments);try{shCard();}catch(e){}return r;};}
 const PUBLICADO=location.protocol!=='file:';
 const EXPIRADO=PUBLICADO&&VALIDADE&&new Date()>new Date(VALIDADE+'T23:59:59');
 if(EXPIRADO){
